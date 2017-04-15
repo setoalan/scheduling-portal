@@ -1,0 +1,28 @@
+{
+  "name": "tempus-code-challenge",
+  "version": "0.0.0",
+  "description": "Tempus Code Challenge",
+  "private": true,
+  "main": "index.js",
+  "license": "ISC",
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/setoalan/tempus-code-challenge.git"
+  },
+  "author": "Alan Seto <alantseto@gmail.com>",
+  "homepage": "https://bitbucket.org/setoalan/tempus-code-challenge#readme",
+  "dependencies": {
+    "body-parser": "~1.17.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "morgan": "~1.8.1",
+    "nodemon": "^1.11.0",
+    "pug": "^2.0.0-beta11",
+    "serve-favicon": "~2.4.2"
+  }
+}
