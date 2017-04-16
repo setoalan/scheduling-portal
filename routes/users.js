@@ -14,7 +14,17 @@ userRouter.route('/')
       .find({doctor: false})
       .exec((err, users) => {
         if (err) throw err;
-        res.render('users', { users });
+        res.render('users', { users, token: req.query.token });
+      });
+  });
+
+userRouter.route('/me')
+  .get(Verify.verifyUser, (req, res, next) => {
+    Users
+      .findById(req.decoded._doc._id)
+      .exec((err, user) => {
+        if (err) throw err;
+        res.render('user', user);
       });
   });
 
@@ -27,5 +37,6 @@ userRouter.route('/:userId')
         res.render('user', user);
       });
   });
+
 
 module.exports = userRouter;

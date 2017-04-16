@@ -53,7 +53,7 @@ indexRouter.route('/login')
         if (user.doctor) {
           res.redirect(`/users?token=${token}`);
         } else {
-          res.redirect(`/?token=${token}`);
+          res.redirect(`/users/me?token=${token}`);
         }
       });
     })(req, res, next);
