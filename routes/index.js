@@ -38,11 +38,10 @@ indexRouter.route('/login')
     passport.authenticate('local', (err, user, info) => {
       if (err) return next(err);
       if (!user) {
-        res.locals.message = info;
-        res.locals.error = info;
+        res.locals.message = info.message;
+        res.locals.error = info.message;
         res.status(401);
-        res.render('error');
-        return;
+        return res.render('error');
       }
 
       req.logIn(user, (err) => {
@@ -62,7 +61,7 @@ indexRouter.route('/login')
 indexRouter.route('/logout')
   .get((req, res) => {
     req.logout();
-    res.redirect('login');
+    res.render('logout', { message: 'Successfully logged out.'});
   });
 
 module.exports = indexRouter;

@@ -1,9 +1,13 @@
 extends layout
 
 block content
-  br
   h1 #{name}
-  p Age: #{age}
-  p Email Address: #{emailAddress}
-  p Mailing Address: #{mailingAddress}
-  p Phone Number: #{phoneNumber}
+  h4 Age:&nbsp;
+    small #{age}
+  h4 Email Address:&nbsp;
+    small #{emailAddress}
+  h4 Mailing Address:&nbsp;
+    small #{mailingAddress}
+  h4 Phone Number:&nbsp;
+    small #{phoneNumber}
+  a.btn.btn-default(href="/logout") Log out

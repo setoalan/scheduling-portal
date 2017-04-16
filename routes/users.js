@@ -29,7 +29,7 @@ userRouter.route('/me')
   });
 
 userRouter.route('/:userId')
-  .get((req, res, next) => {
+  .get(Verify.verifyDoctor, (req, res, next) => {
     Users
       .findById(req.params.userId)
       .exec((err, user) => {
