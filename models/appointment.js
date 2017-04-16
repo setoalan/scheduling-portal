@@ -3,12 +3,10 @@ const Schema = mongoose.Schema;
 
 const appointmentSchema = new Schema({
   date: {
-    type: Date,
-    require: true
+    type: Date
   },
   subject: {
-    type: Number,
-    require: true
+    type: String
   },
   doctor: {
     type: mongoose.Schema.Types.ObjectId,

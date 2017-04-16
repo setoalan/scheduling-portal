@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h3 Date:&nbsp;
+    small #{appointment.date}
+  h3 Subject:&nbsp;
+    small #{appointment.subject}
+  h3 Doctor:&nbsp;
+    small #{appointment.doctor.name}

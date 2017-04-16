@@ -1,13 +1,31 @@
 extends layout
 
 block content
-  h1 #{name}
+  h1 #{user.name}
   h4 Age:&nbsp;
-    small #{age}
+    small #{user.age}
   h4 Email Address:&nbsp;
-    small #{emailAddress}
+    small #{user.emailAddress}
   h4 Mailing Address:&nbsp;
-    small #{mailingAddress}
+    small #{user.mailingAddress}
   h4 Phone Number:&nbsp;
-    small #{phoneNumber}
+    small #{user.phoneNumber}
+  h4 Appointments:
+  table.table.table-striped
+    thead
+      tr
+        th Date
+        th Subject
+        th Doctor
+        th View
+    tbody
+      each appointment in user.appointments
+        tr
+          td #{appointment.date}
+          td #{appointment.subject}
+          td #{appointment.doctor.name}
+          td
+            a.btn.btn-info(href="/users/me/appointments/" + appointment._id + "?token=" + token) View
+
+  a.btn.btn-primary(href="/users/me/appointments/new"  + "?token=" + token) Make Appointment
   a.btn.btn-default(href="/logout") Log out

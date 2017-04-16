@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
-const appointment = require('./appointments');
+const appointment = require('./appointment');
 
 const userSchema = new Schema({
   username: String,
@@ -16,7 +16,10 @@ const userSchema = new Schema({
   mailingAddress: String,
   phoneNumber: String,
   appointments: [
-    appointment.schema
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Appointment'
+    }
   ],
   doctor: {
     type: Boolean,
