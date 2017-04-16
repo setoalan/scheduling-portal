@@ -1,9 +1,31 @@
 const express = require('express');
-const router = express.Router();
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
-/* GET users listing. */
-router.get('/', (req, res, next) => {
-  res.send('respond with a resource');
-});
+const Users = require('../models/user');
 
-module.exports = router;
+const userRouter = express.Router();
+
+userRouter.use(bodyParser.json());
+
+userRouter.route('/')
+  .get((req, res, next) => {
+    Users
+      .find({type: 'patient'})
+      .exec((err, users) => {
+        if (err) throw err;
+        res.render('users', { users });
+      });
+  });
+
+userRouter.route('/:userId')
+  .get((req, res, next) => {
+    Users
+      .findById(req.params.userId)
+      .exec((err, user) => {
+        if (err) throw err;
+        res.render('user', user);
+      });
+  });
+
+module.exports = userRouter;

@@ -6,11 +6,19 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
 
 const app = express();
+
+mongoose.connect('mongodb://localhost:27017/tempus');
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error: '));
+db.once('open', () => {
+  console.log('Connected correctly to mongodb server');
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +33,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/patients', users);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

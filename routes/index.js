@@ -1,9 +1,8 @@
 const express = require('express');
-const router = express.Router();
+const indexRouter = express.Router();
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' });
+indexRouter.get('/', (req, res, next) => {
+  res.render('index', { title: 'Tempus Code Challenge' });
 });
 
-module.exports = router;
+module.exports = indexRouter;

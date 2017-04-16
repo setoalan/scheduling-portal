@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  div.content
+    table.table.table-striped
+      thead
+        tr
+          th Name
+          th Age
+          th Email Address
+          th Mailing Address
+          th Phone Number
+          th View
+      tbody
+        each user in users
+          tr
+            td #{user.name}
+            td #{user.age}
+            td #{user.emailAddress}
+            td #{user.mailingAddress}
+            td #{user.phoneNumber}
+            td
+              a(href="/patients/" + user._id) View
