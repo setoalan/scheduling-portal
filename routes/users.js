@@ -14,7 +14,7 @@ userRouter.route('/')
       .find({type: 'patient'})
       .exec((err, users) => {
         if (err) throw err;
-        res.render('users', { users });
+        res.json(users);
       });
   });
 
@@ -24,7 +24,7 @@ userRouter.route('/:userId')
       .findById(req.params.userId)
       .exec((err, user) => {
         if (err) throw err;
-        res.render('user', user);
+        res.json(user);
       });
   });
 
