@@ -1,17 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const passport = require('passport');
 
 const Users = require('../models/user');
+const Verify = require('./verify');
 
 const userRouter = express.Router();
-
 userRouter.use(bodyParser.json());
 
 userRouter.route('/')
-  .get((req, res, next) => {
+  .get(Verify.verifyDoctor, (req, res, next) => {
     Users
-      .find({type: 'patient'})
+      .find({doctor: false})
       .exec((err, users) => {
         if (err) throw err;
         res.render('users', { users });
