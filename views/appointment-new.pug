@@ -1,7 +1,7 @@
-extends layout
+extends index-container
 
 block content
-  form(action="/users/me/appointments/new" method="post")
+  form(action="/users/appointments/new" method="post")
     div.form-group
       label Date and Time:
       div.input-group.date#datetimepicker1

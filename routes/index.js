@@ -10,7 +10,7 @@ indexRouter.use(bodyParser.json());
 
 indexRouter.route('/')
   .get((req, res, next) => {
-    res.render('index', { title: 'Tempus Code Challenge' });
+    res.render('index');
   });
 
 indexRouter.route('/register')
@@ -20,7 +20,6 @@ indexRouter.route('/register')
       req.body.password,
       (err, user) => {
         if (err) return res.status(500).json({ err: err });
-
         user.save((err, user) => {
           passport.authenticate('local')(req, res, () => {
             return res.status(200).json({ status: 'Registration Successful!' });
@@ -32,7 +31,7 @@ indexRouter.route('/register')
 
 indexRouter.route('/login')
   .get((req, res, next) => {
-    res.render('login');
+    res.render('user-login');
   })
   .post((req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
@@ -40,8 +39,7 @@ indexRouter.route('/login')
       if (!user) {
         res.locals.message = info.message;
         res.locals.error = info.message;
-        res.status(401);
-        return res.render('error');
+        return res.status(401).render('error');
       }
 
       req.logIn(user, (err) => {
@@ -50,7 +48,7 @@ indexRouter.route('/login')
         const token = Verify.getToken(user);
 
         if (user.doctor) {
-          res.redirect(`/users?token=${token}`);
+          res.redirect(`/users/index?token=${token}`);
         } else {
           res.redirect(`/users/me?token=${token}`);
         }
@@ -61,7 +59,7 @@ indexRouter.route('/login')
 indexRouter.route('/logout')
   .get((req, res) => {
     req.logout();
-    res.render('logout', { message: 'Successfully logged out.'});
+    res.render('user-logout', { message: 'Successfully logged out.'});
   });
 
 module.exports = indexRouter;

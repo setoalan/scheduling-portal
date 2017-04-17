@@ -1,4 +1,4 @@
-extends layout
+extends index-container
 
 block content
   div.content
@@ -20,5 +20,5 @@ block content
             td #{user.mailingAddress}
             td #{user.phoneNumber}
             td
-              a.btn.btn-primary(href="/users/" + user._id + "?token=" + token) View
+              a.btn.btn-primary(href="/users/" + user._id + "/view?token=" + token) View
     a.btn.btn-default(href="/logout") Log out
