@@ -1,6 +1,6 @@
 {
   "name": "tempus-code-challenge",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Tempus Code Challenge",
   "private": true,
   "main": "index.js",
@@ -24,6 +24,12 @@
     "mongoose": "^4.9.5",
     "morgan": "~1.8.1",
     "nodemon": "^1.11.0",
+    "react": "15.4.0",
+    "react-dom": "15.4.0",
+    "react-redux": "^5.0.4",
+    "react-router": "3.0.0",
+    "redux": "^3.6.0",
+    "redux-promise": "^0.5.3",
     "serve-favicon": "~2.4.2"
   },
   "devDependencies": {
