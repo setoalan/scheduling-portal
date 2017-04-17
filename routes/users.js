@@ -1,9 +1,26 @@
-const express = require('express');
-const router = express.Router();
+import express from 'express';
+import User from '../models/user';
 
-/* GET users listing. */
-router.get('/', (req, res, next) => {
-  res.send('respond with a resource');
-});
+const userRouter = express.Router();
 
-module.exports = router;
+userRouter.route('/')
+  .get((req, res, next) => {
+    User
+      .find({})
+      .exec((err, users) => {
+        if (err) throw err;
+        res.json(users);
+      });
+  });
+
+userRouter.route('/:userId')
+  .get((req, res, next) => {
+    User
+      .findById(req.params.userId)
+      .exec((err, user) => {
+        if (err) throw err;
+        res.json(user);
+      });
+  });
+
+module.exports = userRouter;
