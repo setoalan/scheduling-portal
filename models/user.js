@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const passportLocalMongoose = require('passport-local-mongoose');
 const appointment = require('./appointment');
 
 const userSchema = new Schema({
@@ -15,14 +16,19 @@ const userSchema = new Schema({
   mailingAddress: String,
   phoneNumber: String,
   appointments: [
-    appointment.schema
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Appointment'
+    }
   ],
-  type: {
+  doctor: {
     type: Boolean,
     default: false
   }
 }, {
   timestamps: true
 });
+
+userSchema.plugin(passportLocalMongoose)
 
 module.exports = mongoose.model('User', userSchema);

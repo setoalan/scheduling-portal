@@ -8,6 +8,7 @@ class Users extends Component {
 
   componentWillMount() {
     this.props.fetchPatients();
+    console.log(this.props);
   }
 
   renderPatients() {
@@ -49,7 +50,10 @@ class Users extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { patients: state.patients.patients }
+  return {
+    patients: state.patients.patients,
+    authenticated: state.authenticated.authenticated
+  }
 }
 
 export default connect(mapStateToProps, { fetchPatients })(Users);

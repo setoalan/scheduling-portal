@@ -7,15 +7,19 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
+const config = require('./config');
 const index = require('./routes/index');
 const users = require('./routes/users');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/tempus');
+mongoose.Promise = global.Promise;
+mongoose.connect(config.mongoUrl);
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error: '));
+db.on('error', console.error.bind(console, 'Connection error: '));
 db.once('open', () => {
   console.log('Connected correctly to mongodb server');
 });
@@ -34,9 +38,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
+
+const User = require('./models/user');
+app.use(passport.initialize());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use('/', index);
 app.use('/users', users);

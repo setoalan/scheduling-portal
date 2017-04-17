@@ -1,32 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
+import ReactDOM from 'react-dom';
+import { browserHistory } from 'react-router';
 
 import { logIn } from '../actions/index';
 
 class Login extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.logIn = this.logIn.bind(this);
-  }
-
   logIn(e) {
     e.preventDefault();
-    this.props.logIn();
+    const username = ReactDOM.findDOMNode(this.refs.username).value;
+    const password = ReactDOM.findDOMNode(this.refs.password).value;
+    this.props.logIn(username, password);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.authenticated !== undefined) {
+      if (nextProps.authenticated.doctor) {
+        browserHistory.push('/users');
+      } else {
+        browserHistory.push('/');
+      }
+    }
   }
 
   render() {
     return (
       <Row>
         <Col xs={12}>
-          <form onSubmit={this.logIn}>
+          <form onSubmit={this.logIn.bind(this)}>
             <FormGroup>
               <ControlLabel>Username</ControlLabel>
               <FormControl
                 type="text"
                 name="username"
+                ref="username"
               />
             </FormGroup>
             <FormGroup>
@@ -34,6 +42,7 @@ class Login extends Component {
               <FormControl
                 type="password"
                 name="password"
+                ref="password"
               />
             </FormGroup>
             <Button
@@ -49,7 +58,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { patients: state.patients.patients }
+  return { authenticated: state.authenticated.authenticated }
 }
 
 export default connect(mapStateToProps, { logIn })(Login);
