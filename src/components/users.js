@@ -8,7 +8,6 @@ class Users extends Component {
 
   componentWillMount() {
     this.props.fetchPatients();
-    console.log(this.props);
   }
 
   renderPatients() {

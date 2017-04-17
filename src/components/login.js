@@ -16,7 +16,7 @@ class Login extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.authenticated !== undefined) {
-      if (nextProps.authenticated.doctor) {
+      if (nextProps.authenticated.user.doctor) {
         browserHistory.push('/users');
       } else {
         browserHistory.push('/users/me');

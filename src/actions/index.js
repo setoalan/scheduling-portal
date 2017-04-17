@@ -3,6 +3,7 @@ import querystring from 'querystring';
 
 export const LOG_IN = 'LOG_IN';
 export const FETCH_PATIENTS = 'FETCH_PATIENTS';
+export const FETCH_USER = 'FETCH_USER';
 
 const ROOT_URL = 'http://localhost:3100';
 
@@ -22,6 +23,15 @@ export function fetchPatients() {
 
   return {
     type: FETCH_PATIENTS,
+    payload: request
+  };
+}
+
+export function fetchUser() {
+  const request = axios.get(`${ROOT_URL}/users/me`);
+
+  return {
+    type: FETCH_USER,
     payload: request
   };
 }

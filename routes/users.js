@@ -19,15 +19,6 @@ userRouter.route('/')
       });
   });
 
-userRouter.route('/:userId')
-  .get((req, res, next) => {
-    User
-      .findById(req.params.userId)
-      .exec((err, user) => {
-        if (err) throw err;
-        res.json(user);
-      });
-  });
 
 userRouter.route('/login')
   .post((req, res, next) => {
@@ -41,12 +32,43 @@ userRouter.route('/login')
         const token = Verify.getToken(user);
 
         if (user.doctor) {
-          res.status(200).json({ doctor: true, token });
+          res.status(200).json({ user, token });
         } else {
-          res.status(200).json({ doctor: false, token });
+          res.status(200).json({ user, token });
         }
       });
     })(req, res, next);
   });
+
+userRouter.route('/me')
+  .get((req, res, next) => {
+    console.log('getting personal info');
+    res.status(200).json({me:true});
+    // User
+    //   .findById(req.decoded._doc._id)
+    //   .populate({
+    //     path: 'appointments',
+    //     model: 'Appointment',
+    //     populate: {
+    //       path: 'doctor',
+    //       model: 'User'
+    //     }
+    //   })
+    //   .exec((err, user) => {
+    //     if (err) throw err;
+    //     res.render('user', { user, token: req.query.token });
+    //   });
+  });
+
+userRouter.route('/:userId')
+.get((req, res, next) => {
+  console.log('asdfs');
+  User
+  .findById(req.params.userId)
+  .exec((err, user) => {
+    if (err) throw err;
+    res.json(user);
+  });
+});
 
 module.exports = userRouter;
