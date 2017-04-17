@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
 
-import Header from '../containers/header';
-
-class Home extends Component {
+class Header extends Component {
   render() {
     return (
       <Row>
         <Col xs={12}>
-          This is the homepage.
+          <h1>Tempus Code Challenge</h1>
+          <hr />
         </Col>
       </Row>
     );
   }
 }
 
-export default Home;
+export default Header;

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const appointment = require('./appointments');
+const appointment = require('./appointment');
 
 const userSchema = new Schema({
   username: String,
@@ -18,8 +18,8 @@ const userSchema = new Schema({
     appointment.schema
   ],
   type: {
-    type: String,
-    default: 'patient'
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

@@ -11,7 +11,7 @@ userRouter.use(bodyParser.json());
 userRouter.route('/')
   .get((req, res, next) => {
     Users
-      .find({type: 'patient'})
+      .find({doctor: false})
       .exec((err, users) => {
         if (err) throw err;
         res.json(users);
