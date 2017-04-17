@@ -1,9 +1,9 @@
 'use strict';
 
-const path = require('path');
-// We define some paths to be used throughout the webpack config
+import path from 'path';
+
 module.exports = {
-  src: path.join(__dirname, 'public'),
-  dist: path.join(__dirname, 'dist'),
-  css: path.join(__dirname, 'public/css')
+  src: path.join(__dirname, 'client/src'),
+  dist: path.join(__dirname, 'client/dist'),
+  css: path.join(__dirname, 'client/dist/css')
 };

@@ -10,9 +10,9 @@ import mongoose from 'mongoose';
 
 import config from './config';
 
-import index from './routes/index';
-import users from './routes/users';
-import appointments from './routes/appointments';
+import index from './app/routes/index';
+import users from './app/routes/users';
+import appointments from './app/routes/appointments';
 
 const app = express();
 
