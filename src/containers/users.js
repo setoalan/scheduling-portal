@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Row, Col, Table } from 'react-bootstrap';
 
 import { fetchPatients } from '../actions/index';
-import Header from '../containers/header';
 
 class Users extends Component {
 

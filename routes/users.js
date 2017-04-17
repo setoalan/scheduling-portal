@@ -28,4 +28,9 @@ userRouter.route('/:userId')
       });
   });
 
+userRouter.route('/login')
+  .post((req, res, next) => {
+    
+  });
+
 module.exports = userRouter;

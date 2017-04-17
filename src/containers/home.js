@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
 
-import Header from '../containers/header';
-
 class Home extends Component {
   render() {
     return (
