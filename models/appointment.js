@@ -4,11 +4,20 @@ const Schema = mongoose.Schema;
 const appointmentSchema = new Schema({
   date: {
     type: Date,
-    require: true
+    required: true,
+    default: Date.now // TODO: remove later
   },
   subject: {
-    type: Number,
-    require: true
+    type: String,
+    required: true
+  },
+  message: {
+    type: String,
+    default: '-'
+  },
+  status: {
+    type: String,
+    default: 'pending'
   },
   patient: {
     type: mongoose.Schema.Types.ObjectId,

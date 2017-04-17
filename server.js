@@ -17,7 +17,7 @@ import appointments from './routes/appointments';
 const app = express();
 
 mongoose.connect(config.mongoUrl);
-// mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection error: '));
 db.once('open', () => {

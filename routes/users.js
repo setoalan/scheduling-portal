@@ -1,26 +1,22 @@
 import express from 'express';
-import User from '../models/user';
+import Users from '../models/user';
 
 const userRouter = express.Router();
 
 userRouter.route('/')
   .get((req, res, next) => {
-    User
-      .find({})
-      .exec((err, users) => {
-        if (err) throw err;
-        res.json(users);
-      });
+    Users.find({}, (err, users) => {
+      if (err) throw err;
+      res.json(users);
+    });
   });
 
 userRouter.route('/:userId')
   .get((req, res, next) => {
-    User
-      .findById(req.params.userId)
-      .exec((err, user) => {
-        if (err) throw err;
-        res.json(user);
-      });
+    Users.findById(req.params.userId, (err, user) => {
+      if (err) throw err;
+      res.json(user);
+    });
   });
 
 module.exports = userRouter;
