@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { hashHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Datetime from 'react-datetime';
 
@@ -10,8 +11,11 @@ class Appointment extends Component {
   constructor(props) {
     super(props);
 
-    this.props.fetchDoctors();
     this.makeAppointment = this.makeAppointment.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.fetchDoctors();
   }
 
   makeAppointment(e) {
@@ -24,6 +28,7 @@ class Appointment extends Component {
       doctor: $('#doctor').val(),
     }
     this.props.createAppointment(appointment);
+    hashHistory.push('/');
   }
 
   renderDoctors() {

@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchPatient } from '../actions/index';
+import { fetchPatient, updateAppointment } from '../actions/index';
 
 class User extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.updateStatus = this.updateStatus.bind(this);
+  }
+
   componentWillMount() {
     this.props.fetchPatient(this.props.params.user_id);
+  }
+
+  updateStatus(status, appointment) {
+    appointment.status = status;
+    this.props.updateAppointment(appointment);
   }
 
   renderAppointments() {
@@ -18,7 +29,28 @@ class User extends Component {
           <td>{appointment.message}</td>
           <td>{appointment.doctor.name}</td>
           <td>{appointment.patient.name}</td>
-          <td>{appointment.status}</td>
+          <td>
+            <div className="btn-group" role="group">
+              <button
+                type="button"
+                onClick={() => this.updateStatus('active', appointment)}
+                className={"btn btn-success btn-xs" + (appointment.status === 'active' ? ' active' : '')}>
+                Active
+              </button>
+              <button
+                type="button"
+                onClick={() => this.updateStatus('pending', appointment)}
+                className={"btn btn-info btn-xs" + (appointment.status === 'pending' ? ' active' : '')}>
+                Pending
+              </button>
+              <button
+                type="button"
+                onClick={() => this.updateStatus('cancel', appointment)}
+                className={"btn btn-danger btn-xs" + (appointment.status === 'cancel' ? ' active' : '')}>
+                Cancel
+              </button>
+            </div>
+          </td>
         </tr>
       )
     });
@@ -57,8 +89,9 @@ class User extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    appointment: state.appointment.appointment,
     patient: state.patient.patient
   }
 }
 
-export default connect(mapStateToProps, { fetchPatient })(User);
+export default connect(mapStateToProps, { fetchPatient, updateAppointment })(User);

@@ -3,6 +3,7 @@ import axios from 'axios';
 export const FETCH_PATIENTS = 'FETCH_PATIENTS';
 export const FETCH_DOCTORS = 'FETCH_DOCTORS';
 export const CREATE_APPOINTMENT = 'CREATE_APPOINTMENT';
+export const UPDATE_APPOINTMENT = 'UPDATE_APPOINTMENT';
 export const FETCH_PATIENT = 'FETCH_PATIENT';
 
 const ROOT_URL = 'http://localhost:3001';
@@ -30,6 +31,15 @@ export function createAppointment(appointment) {
 
   return {
     type: CREATE_APPOINTMENT,
+    payload: request
+  };
+}
+
+export function updateAppointment(appointment) {
+  const request = axios.put(`${ROOT_URL}/appointments/${appointment._id}`, appointment);
+
+  return {
+    type: UPDATE_APPOINTMENT,
     payload: request
   };
 }
