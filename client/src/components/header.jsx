@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 class Header extends Component {
+
+  isActivePath(path) {
+    return (this.props.location.pathname === path) ? 'active' : '';
+  }
+
   render() {
     return (
       <div className="row">
@@ -20,12 +25,12 @@ class Header extends Component {
 
               <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul className="nav navbar-nav">
-                  <li><Link to={'/users'}>Patients</Link></li>
-                  <li><Link to={'/appointments'}>Make Appointment</Link></li>
+                  <li className={this.isActivePath('/users')}><Link to={'/users'}>Patients</Link></li>
+                  <li className={this.isActivePath('/appointment')}><Link to={'/appointment'}>Make Appointment</Link></li>
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
-                  <li><Link to={'/users/me'}>My Record</Link></li>
-                  <li><Link to={'/users/sign_in'}>Sign In</Link></li>
+                  <li className={this.isActivePath('/users/me')}><Link to={'/users/me'}>My Record</Link></li>
+                  <li className={this.isActivePath('/users/sign_in')}><Link to={'/users/sign_in'}>Sign In</Link></li>
                 </ul>
               </div>
             </div>

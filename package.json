@@ -1,6 +1,6 @@
 {
   "name": "tempus-code-challenge",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Tempus Code Challenge",
   "private": true,
   "main": "index.js",
