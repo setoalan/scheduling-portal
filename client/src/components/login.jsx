@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 import { connect } from 'react-redux';
 
-import { login } from '../actions/index';
+import { loginUser } from '../actions/index';
 
 class Login extends Component {
 
@@ -18,8 +18,7 @@ class Login extends Component {
       username: $('#username').val(),
       password: $('#password').val()
     }
-    this.props.login(user);
-    hashHistory.push('/?status=success');
+    this.props.loginUser(user);
   }
 
   render() {
@@ -47,8 +46,8 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    authActions: state.authActions.authActions
+    auth: state.auth
   }
 }
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { loginUser })(Login);

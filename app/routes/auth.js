@@ -7,10 +7,11 @@ import Users from '../models/user';
 
 const authRouter = express.Router();
 
-const createToken = (name) => {
+const createToken = (name, doctor) => {
   const payload = {
-    sub: name,
-    exp: moment().add(1, 'day').unix()
+    name,
+    doctor,
+    expires: moment().add(1, 'day').unix()
   };
   return jwt.sign(payload, config.secretKey);
 };
@@ -33,12 +34,12 @@ const verifyAuth = (req, res, next) => {
 authRouter.route('/login')
   .post((req, res, next) => {
     Users.findOne({ username:req.body.username }, '+password', (err, user) => {
-      if (!user) return res.status(401).json({ message: 'Invalid email/password' });
+      if (!user) return res.status(401).json({ message: 'Invalid username/password' });
       user.comparePassword(req.body.password, (err, isMatch) => {
-        if (!isMatch) return res.status(401).json({ message: 'Invalid email/password'});
+        if (!isMatch) return res.status(401).json({ message: 'Invalid username/password'});
         res.json({
           message: 'You are logged in',
-          token: createToken(user.name)
+          token: createToken(user.name, user.doctor)
         });
       });
     });
@@ -53,7 +54,7 @@ authRouter.route('/signup')
         if (err) res.send(err);
         res.json({
           message: 'Welcome to Tempus, you are now logged in',
-          token: createToken(result.name)
+          token: createToken(result.name, result.doctor)
         });
       });
     });
