@@ -6,6 +6,7 @@ export const CREATE_APPOINTMENT = 'CREATE_APPOINTMENT';
 export const UPDATE_APPOINTMENT = 'UPDATE_APPOINTMENT';
 export const UPLOAD_FILE = 'UPLOAD_FILE';
 export const FETCH_PATIENT = 'FETCH_PATIENT';
+export const LOGIN = 'LOGIN';
 
 const ROOT_URL = 'http://localhost:3001';
 
@@ -59,6 +60,15 @@ export function fetchPatient(userId) {
 
   return {
     type: FETCH_PATIENT,
+    payload: request
+  };
+}
+
+export function login(user) {
+  const request = axios.post(`${ROOT_URL}/auth/login`, user);
+
+  return {
+    type: LOGIN,
     payload: request
   };
 }
