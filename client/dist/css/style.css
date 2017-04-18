@@ -1,3 +1,16 @@
 .navbar {
   margin-top: 10px;
 }
+
+.table-disabled {
+  background-color: rgba(0, 0, 0, 0.02);
+  pointer-events: none;
+}
+
+.table-disabled > td {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.table-disabled > td > div > button {
+  color: rgba(0, 0, 0, 0.3) !important;
+}

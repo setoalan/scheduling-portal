@@ -28,7 +28,7 @@ class Appointment extends Component {
       doctor: $('#doctor').val(),
     }
     this.props.createAppointment(appointment);
-    hashHistory.push('/');
+    hashHistory.push('/?status=success');
   }
 
   renderDoctors() {

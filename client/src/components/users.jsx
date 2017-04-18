@@ -19,7 +19,7 @@ class Users extends Component {
           <td>{patient.emailAddress}</td>
           <td>{patient.mailingAddress}</td>
           <td>{patient.phoneNumber}</td>
-          <td><Link to={'/user/'+patient._id}><button type="button" className="btn btn-info">View</button></Link></td>
+          <td><Link to={'/user/' + patient._id}><button type="button" className="btn btn-info btn-xs">View</button></Link></td>
         </tr>
       )
     });

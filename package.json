@@ -1,6 +1,6 @@
 {
   "name": "tempus-code-challenge",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Tempus Code Challenge",
   "private": true,
   "main": "index.js",
@@ -23,6 +23,7 @@
     "debug": "~2.6.3",
     "ejs": "^2.5.6",
     "express": "~4.15.2",
+    "moment": "^2.18.1",
     "mongoose": "^4.9.5",
     "morgan": "~1.8.1",
     "nodemon": "^1.11.0",

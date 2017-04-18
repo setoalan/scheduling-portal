@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { fetchPatient, updateAppointment } from '../actions/index';
 
@@ -9,6 +10,7 @@ class User extends Component {
     super(props);
 
     this.updateStatus = this.updateStatus.bind(this);
+    this.isOldDate = this.isOldDate.bind(this);
   }
 
   componentWillMount() {
@@ -20,10 +22,14 @@ class User extends Component {
     this.props.updateAppointment(appointment);
   }
 
+  isOldDate(date) {
+    return moment(date) < moment.now();
+  }
+
   renderAppointments() {
     return this.props.patient.appointments.map((appointment) => {
       return (
-        <tr key={appointment._id}>
+        <tr key={appointment._id} className={(this.isOldDate(appointment.date)) ? 'table-disabled': ''}>
           <td>{appointment.date}</td>
           <td>{appointment.subject}</td>
           <td>{appointment.message}</td>
@@ -66,7 +72,7 @@ class User extends Component {
           <h4>Mailing Address <small>{this.props.patient.mailingAddress}</small></h4>
           <h4>Phone Number <small>{this.props.patient.phoneNumber}</small></h4>
           <h4>Appointments</h4>
-          <table className="table table-striped table-hover">
+          <table className="table table-hover">
             <thead>
               <tr>
                 <th>Date</th>
