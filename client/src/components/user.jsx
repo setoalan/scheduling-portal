@@ -40,8 +40,8 @@ class User extends Component {
                 <th>Date</th>
                 <th>Subject</th>
                 <th>Message</th>
-                <th>Patient</th>
                 <th>Doctor</th>
+                <th>Patient</th>
                 <th>Status</th>
               </tr>
             </thead>

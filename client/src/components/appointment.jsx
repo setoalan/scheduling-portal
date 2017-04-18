@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Datetime from 'react-datetime';
 
-import { createAppointment } from '../actions/index';
+import { fetchDoctors, createAppointment } from '../actions/index';
 import '../../dist/css/react-datetime.css';
 
 class Appointment extends Component {
@@ -10,6 +10,7 @@ class Appointment extends Component {
   constructor(props) {
     super(props);
 
+    this.props.fetchDoctors();
     this.makeAppointment = this.makeAppointment.bind(this);
   }
 
@@ -23,6 +24,12 @@ class Appointment extends Component {
       doctor: $('#doctor').val(),
     }
     this.props.createAppointment(appointment);
+  }
+
+  renderDoctors() {
+    return this.props.doctors.map((doctor) => {
+      return <option key={doctor._id} value={doctor._id}>{doctor.name}</option>
+    });
   }
 
   render() {
@@ -45,11 +52,14 @@ class Appointment extends Component {
               <label>Message</label>
               <textarea rows="3" className="form-control" id="message" />
             </div>
-            <div className="form-group hidden">
-              <input type="text" className="form-control" id="patient" value="58f3a7bfb8ae7415fed4c526"/>
+            <div className="form-group">
+              <label>Doctor</label>
+              <select className="form-control" id="doctor">
+                {this.renderDoctors()}
+              </select>
             </div>
             <div className="form-group hidden">
-              <input type="text" className="form-control" id="doctor" value="58f3a7f5b8ae7415fed4c528" />
+              <input type="text" className="form-control" id="patient" value="58f3a7f5b8ae7415fed4c528"/>
             </div>
             <button type="submit" className="btn btn-primary">Request Appointment</button>
           </form>
@@ -60,7 +70,9 @@ class Appointment extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return state;
+  return {
+    doctors: state.doctors.doctors
+  }
 }
 
-export default connect(mapStateToProps, { createAppointment })(Appointment);
+export default connect(mapStateToProps, { fetchDoctors, createAppointment })(Appointment);
