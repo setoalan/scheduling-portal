@@ -27,6 +27,7 @@ class Users extends Component {
     return (
       <div className="row">
         <div className="col-xs-12">
+          <h2>Patients</h2>
           <table className="table table-striped table-hover">
             <thead>
               <tr>

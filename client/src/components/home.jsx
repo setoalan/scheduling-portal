@@ -5,7 +5,10 @@ class Home extends Component {
     return (
       <div className="row">
         <div className="col-xs-12">
-          <h1>Home</h1>
+          <div className="jumbotron">
+            <h1>Tempus Code Challange</h1>
+            <p>Made by Alan Seto &lt;alantseto@email.com&gt;</p>
+          </div>
         </div>
       </div>
     );
