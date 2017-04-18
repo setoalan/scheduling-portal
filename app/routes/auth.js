@@ -15,35 +15,6 @@ const createToken = (name) => {
   return jwt.sign(payload, config.secretKey);
 };
 
-const signup = (req, res) => {
-  Users.findOne({ username: req.body.username }, (err, existingUser) => {
-    if (existingUser) return res.status(409).json({ message: 'Username is already taken' });
-
-    const user = Object.assign(new Users(), req.body);
-    user.save((err, result) => {
-      if (err) res.send(err);
-
-      res.json({
-        message: 'Welcome to Tempus, you are now logged in',
-        token: createToken(result.name)
-      });
-    });
-  });
-};
-
-const login = (req, res) => {
-  Users.findOne({ username:req.body.username }, '+password', (err, user) => {
-    if (!user) return res.status(401).json({ message: 'Invalid email/password' });
-
-    user.comparePassword(req.body.password, (err, isMatch) => {
-      if (!isMatch) return res.status(401).json({ message: 'Invalid email/password'});
-
-      res.json({ message: 'You are logged in', token: createToken(user.name) });
-    });
-
-  });
-};
-
 const verifyAuth = (req, res, next) => {
   const token = req.headers['x-access-token'];
   if (token) {
@@ -60,13 +31,32 @@ const verifyAuth = (req, res, next) => {
 };
 
 authRouter.route('/login')
-  .post(login, (req, res, next) => {
-    res.status(200).send({ message: 'login success' });
+  .post((req, res, next) => {
+    Users.findOne({ username:req.body.username }, '+password', (err, user) => {
+      if (!user) return res.status(401).json({ message: 'Invalid email/password' });
+      user.comparePassword(req.body.password, (err, isMatch) => {
+        if (!isMatch) return res.status(401).json({ message: 'Invalid email/password'});
+        res.json({
+          message: 'You are logged in',
+          token: createToken(user.name)
+        });
+      });
+    });
   });
 
 authRouter.route('/signup')
-  .post(signup, (req, res, next) => {
-    res.status(200).send({ message: 'signup sucess' });
+  .post((req, res, next) => {
+    Users.findOne({ username: req.body.username }, (err, existingUser) => {
+      if (existingUser) return res.status(409).json({ message: 'Username is already taken' });
+      const user = Object.assign(new Users(), req.body);
+      user.save((err, result) => {
+        if (err) res.send(err);
+        res.json({
+          message: 'Welcome to Tempus, you are now logged in',
+          token: createToken(result.name)
+        });
+      });
+    });
   });
 
 module.exports = authRouter;

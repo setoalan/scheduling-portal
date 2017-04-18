@@ -13,17 +13,17 @@ const appointmentSchema = new Schema({
   },
   message: {
     type: String,
-    default: '-'
+    default: ''
   },
   status: {
     type: String,
     default: 'pending'
   },
-  patient: {
+  doctor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  doctor: {
+  patient: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }

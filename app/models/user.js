@@ -13,11 +13,26 @@ const userSchema = new Schema({
     type: String,
     select: false
   },
-  name: String,
-  age: Number,
-  emailAddress: String,
-  mailingAddress: String,
-  phoneNumber: String,
+  name: {
+    type: String,
+    default: 'John Doe'
+  },
+  age: {
+    type: Number,
+    default: 18
+  },
+  emailAddress: {
+    type: String,
+    default: 'johndoe@email.com'
+  },
+  mailingAddress: {
+    type: String,
+    default: '124 Main St, City, ST 12345'
+  },
+  phoneNumber: {
+    type: String,
+    default: '(123) 456-7890'
+  },
   appointments: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -29,7 +44,8 @@ const userSchema = new Schema({
     default: false
   },
   file: {
-    type: String
+    type: String,
+    default: ''
   }
 },
   {
