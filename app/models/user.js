@@ -1,9 +1,18 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
+
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  username: String,
-  password: String,
+  username: {
+    type: String,
+    unique: true,
+    lowercase: true
+  },
+  password: {
+    type: String,
+    select: false
+  },
   name: String,
   age: Number,
   emailAddress: String,
@@ -27,5 +36,21 @@ const userSchema = new Schema({
     timestamps: true
   }
 );
+
+userSchema.pre('save', function (next) {
+  let user = this;
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(user.password, salt, (err, hash) => {
+      user.password = hash;
+      next();
+    });
+  });
+});
+
+userSchema.methods.comparePassword = function (password, done) {
+  bcrypt.compare(password, this.password, (err, isMatch) => {
+    done(err, isMatch);
+  });
+};
 
 module.exports = mongoose.model('User', userSchema);

@@ -1,11 +1,12 @@
 import express from 'express';
+
 import Users from '../models/user';
 
 const userRouter = express.Router();
 
 userRouter.route('/patients')
   .get((req, res, next) => {
-    Users.find({doctor: false}, (err, users) => {
+    Users.find({ doctor: false }, (err, users) => {
       if (err) throw err;
       res.json(users);
     });
@@ -13,7 +14,7 @@ userRouter.route('/patients')
 
 userRouter.route('/doctors')
   .get((req, res, next) => {
-    Users.find({doctor: true}, (err, users) => {
+    Users.find({ doctor: true }, (err, users) => {
       if (err) throw err;
       res.json(users);
     });

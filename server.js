@@ -13,6 +13,7 @@ import config from './config';
 import index from './app/routes/index';
 import users from './app/routes/users';
 import appointments from './app/routes/appointments';
+import auth from './app/routes/auth';
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use((req, res, next) => {
 app.use('/', index);
 app.use('/users', users);
 app.use('/appointments', appointments);
+app.use('/auth', auth);
 
 app.route('*').get((req, res) => {
   res.sendFile('public/index.html', { root: __dirname });
