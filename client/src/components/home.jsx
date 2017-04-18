@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class Home extends Component {
-  render () {
+  render() {
     return (
       <div className="row">
         <div className="col-xs-12">

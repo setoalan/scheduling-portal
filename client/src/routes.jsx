@@ -13,7 +13,7 @@ export default (
     <IndexRoute component={Home} />
     <Route path="/users">
       <IndexRoute component={Users} />
-      <Route path="me" component={User} />
+      <Route path="/user/:user_id" component={User} />
       <Route path="sign_in" component={SignIn} />
     </Route>
     <Route path="/appointment">

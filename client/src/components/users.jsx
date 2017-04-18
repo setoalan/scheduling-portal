@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 import { fetchPatients } from '../actions/index';
@@ -18,6 +19,7 @@ class Users extends Component {
           <td>{patient.emailAddress}</td>
           <td>{patient.mailingAddress}</td>
           <td>{patient.phoneNumber}</td>
+          <td><Link to={'/user/'+patient._id}><button type="button" className="btn btn-info">View</button></Link></td>
         </tr>
       )
     });
@@ -36,6 +38,7 @@ class Users extends Component {
                 <th>Email Address</th>
                 <th>Mailing Address</th>
                 <th>Phone Number</th>
+                <th>View</th>
               </tr>
             </thead>
             <tbody>

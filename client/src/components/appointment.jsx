@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Datetime from 'react-datetime';
 
-import '../../dist/css/react-datetime.css';
-
 import { createAppointment } from '../actions/index';
+import '../../dist/css/react-datetime.css';
 
 class Appointment extends Component {
 
@@ -61,7 +60,7 @@ class Appointment extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return state
+  return state;
 }
 
 export default connect(mapStateToProps, { createAppointment })(Appointment);

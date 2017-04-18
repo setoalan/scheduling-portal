@@ -13,10 +13,23 @@ userRouter.route('/')
 
 userRouter.route('/:userId')
   .get((req, res, next) => {
-    Users.findById(req.params.userId, (err, user) => {
-      if (err) throw err;
-      res.json(user);
+    Users
+      .findById(req.params.userId)
+      .populate({
+        path: 'appointments',
+        model: 'Appointment',
+        populate: [{
+          path: 'doctor',
+          model: 'User'
+        }, {
+          path: 'patient',
+          model: 'User'
+        }]
+      })
+      .exec((err, user) => {
+        if (err) throw err;
+        res.json(user);
+      });
     });
-  });
 
 module.exports = userRouter;
