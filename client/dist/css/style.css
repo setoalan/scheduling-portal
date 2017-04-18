@@ -14,3 +14,11 @@
 .table-disabled > td > div > button {
   color: rgba(0, 0, 0, 0.3) !important;
 }
+
+.file-group {
+  display: flex;
+}
+
+.file-group > button {
+  margin-right: 10px;
+}

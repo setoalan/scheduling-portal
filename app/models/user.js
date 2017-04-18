@@ -18,6 +18,9 @@ const userSchema = new Schema({
   doctor: {
     type: Boolean,
     default: false
+  },
+  file: {
+    type: String
   }
 },
   {

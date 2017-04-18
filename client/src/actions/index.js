@@ -4,6 +4,7 @@ export const FETCH_PATIENTS = 'FETCH_PATIENTS';
 export const FETCH_DOCTORS = 'FETCH_DOCTORS';
 export const CREATE_APPOINTMENT = 'CREATE_APPOINTMENT';
 export const UPDATE_APPOINTMENT = 'UPDATE_APPOINTMENT';
+export const UPLOAD_FILE = 'UPLOAD_FILE';
 export const FETCH_PATIENT = 'FETCH_PATIENT';
 
 const ROOT_URL = 'http://localhost:3001';
@@ -41,6 +42,15 @@ export function updateAppointment(appointment) {
   return {
     type: UPDATE_APPOINTMENT,
     payload: request
+  };
+}
+
+export function uploadFile() {
+  console.log('Uploading file... (not implemented)');
+
+  return {
+    type: UPLOAD_FILE,
+    payload: null
   };
 }
 

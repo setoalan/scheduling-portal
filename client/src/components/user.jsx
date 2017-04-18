@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { fetchPatient, updateAppointment } from '../actions/index';
+import { fetchPatient, updateAppointment, uploadFile } from '../actions/index';
 
 class User extends Component {
 
@@ -11,6 +11,7 @@ class User extends Component {
 
     this.updateStatus = this.updateStatus.bind(this);
     this.isOldDate = this.isOldDate.bind(this);
+    this.uploadFile = this.uploadFile.bind(this);
   }
 
   componentWillMount() {
@@ -24,6 +25,10 @@ class User extends Component {
 
   isOldDate(date) {
     return moment(date) < moment.now();
+  }
+
+  uploadFile() {
+    this.props.uploadFile();
   }
 
   renderAppointments() {
@@ -87,6 +92,18 @@ class User extends Component {
               {this.renderAppointments()}
             </tbody>
           </table>
+          <form>
+            <div className="form-group">
+              <h4>Upload file</h4>
+              <div className="file-group">
+                <button
+                  type="submit"
+                  onClick={() => this.uploadFile()}
+                  className="btn btn-primary btn-xs">Upload</button>
+                <input type="file" id="file" />
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     );
@@ -100,4 +117,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchPatient, updateAppointment })(User);
+export default connect(mapStateToProps, { fetchPatient, updateAppointment, uploadFile })(User);
