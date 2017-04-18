@@ -30,21 +30,23 @@ class Users extends Component {
       <div className="row">
         <div className="col-xs-12">
           <h2>Patients</h2>
-          <table className="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Email Address</th>
-                <th>Mailing Address</th>
-                <th>Phone Number</th>
-                <th>View</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.renderPatients()}
-            </tbody>
-          </table>
+          <div className="table-responsive">
+            <table className="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Email Address</th>
+                  <th>Mailing Address</th>
+                  <th>Phone Number</th>
+                  <th>View</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.renderPatients()}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );

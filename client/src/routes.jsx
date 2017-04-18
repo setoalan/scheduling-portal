@@ -13,11 +13,9 @@ export default (
     <IndexRoute component={Home} />
     <Route path="/users">
       <IndexRoute component={Users} />
-      <Route path="/user/:user_id" component={User} />
+      <Route path="/user/:userId" component={User} />
+      <Route path="/user/:userId/appointment" component={Appointment} />
       <Route path="sign_in" component={SignIn} />
-    </Route>
-    <Route path="/appointment">
-      <IndexRoute component={Appointment} />>
     </Route>
   </Route>
 );

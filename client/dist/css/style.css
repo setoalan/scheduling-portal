@@ -1,3 +1,19 @@
+.btn-group {
+  display: flex;
+}
+
+.td-date {
+  white-space: nowrap;
+}
+
+.file-group {
+  display: flex;
+}
+
+.file-group > button {
+  margin-right: 10px;
+}
+
 .navbar {
   margin-top: 10px;
 }
@@ -13,12 +29,4 @@
 
 .table-disabled > td > div > button {
   color: rgba(0, 0, 0, 0.3) !important;
-}
-
-.file-group {
-  display: flex;
-}
-
-.file-group > button {
-  margin-right: 10px;
 }

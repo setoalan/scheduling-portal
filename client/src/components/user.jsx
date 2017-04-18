@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
@@ -15,7 +16,7 @@ class User extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchPatient(this.props.params.user_id);
+    this.props.fetchPatient(this.props.params.userId);
   }
 
   updateStatus(status, appointment) {
@@ -33,9 +34,10 @@ class User extends Component {
 
   renderAppointments() {
     return this.props.patient.appointments.map((appointment) => {
+      const date = moment(appointment.date).format('M/D/YY HH:mm');
       return (
         <tr key={appointment._id} className={(this.isOldDate(appointment.date)) ? 'table-disabled': ''}>
-          <td>{appointment.date}</td>
+          <td className="td-date">{date}</td>
           <td>{appointment.subject}</td>
           <td>{appointment.message}</td>
           <td>{appointment.doctor.name}</td>
@@ -45,20 +47,19 @@ class User extends Component {
               <button
                 type="button"
                 onClick={() => this.updateStatus('active', appointment)}
-                className={"btn btn-success btn-xs" + (appointment.status === 'active' ? ' active' : '')}>
+                className={"btn btn-default btn-xs" + (appointment.status === 'active' ? ' btn-success disabled' : '')}>
                 Active
               </button>
               <button
                 type="button"
-                onClick={() => this.updateStatus('pending', appointment)}
-                className={"btn btn-info btn-xs" + (appointment.status === 'pending' ? ' active' : '')}>
+                className={"btn btn-default btn-xs disabled" + (appointment.status === 'pending' ? ' btn-info' : '')}>
                 Pending
               </button>
               <button
                 type="button"
                 onClick={() => this.updateStatus('cancel', appointment)}
-                className={"btn btn-danger btn-xs" + (appointment.status === 'cancel' ? ' active' : '')}>
-                Cancel
+                className={"btn btn-default btn-xs" + (appointment.status === 'cancel' ? ' btn-danger disabled' : '')}>
+                Canceled
               </button>
             </div>
           </td>
@@ -72,26 +73,29 @@ class User extends Component {
       <div className="row">
         <div className="col-xs-12">
           <h2>{this.props.patient.name}</h2>
+          <Link to={'/user/' + this.props.patient._id + "/appointment"}><button type="button" className="btn btn-info">Make Appointment with Patient</button></Link>
           <h4>Age <small>{this.props.patient.age}</small></h4>
           <h4>Email Address <small>{this.props.patient.emailAddress}</small></h4>
           <h4>Mailing Address <small>{this.props.patient.mailingAddress}</small></h4>
           <h4>Phone Number <small>{this.props.patient.phoneNumber}</small></h4>
           <h4>Appointments</h4>
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Subject</th>
-                <th>Message</th>
-                <th>Doctor</th>
-                <th>Patient</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.renderAppointments()}
-            </tbody>
-          </table>
+          <div className="table-responsive">
+            <table className="table table-hover">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Subject</th>
+                  <th>Message</th>
+                  <th>Doctor</th>
+                  <th>Patient</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.renderAppointments()}
+              </tbody>
+            </table>
+          </div>
           <form>
             <div className="form-group">
               <h4>Upload file</h4>

@@ -28,7 +28,6 @@ class Header extends Component {
                   <li className={this.isActivePath('/users')}><Link to={'/users'}>Patients</Link></li>
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
-                  <li className={this.isActivePath('/appointment')}><Link to={'/appointment'}>Make Appointment</Link></li>
                   <li className={this.isActivePath('/')}><Link to={'/'}>My Record</Link></li>
                   <li className={this.isActivePath('/users/sign_in')}><Link to={'/users/sign_in'}>Sign In</Link></li>
                 </ul>

@@ -64,7 +64,7 @@ class Appointment extends Component {
               </select>
             </div>
             <div className="form-group hidden">
-              <input type="text" className="form-control" id="patient" value="58f3a7f5b8ae7415fed4c528"/>
+              <input type="text" className="form-control" id="patient" value={this.props.params.userId}/>
             </div>
             <button type="submit" className="btn btn-primary">Request Appointment</button>
           </form>
