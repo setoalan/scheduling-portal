@@ -17,15 +17,18 @@ const appointmentSchema = new Schema({
   },
   status: {
     type: String,
-    default: 'pending'
+    default: 'pending',
+    require: true
   },
   doctor: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
   patient: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   }
 },
   {

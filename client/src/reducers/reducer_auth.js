@@ -1,6 +1,6 @@
 import jwtDecode from 'jwt-decode';
 
-import { LOGIN_USER, LOGIN_TOKEN } from '../actions/index';
+import { LOGIN_USER, LOGIN_TOKEN, LOGOUT_USER } from '../actions/index';
 
 const INITIAL_STATE = {
   isAuthenticated: false,
@@ -29,6 +29,16 @@ export default (state = INITIAL_STATE, action) => {
       _id: jwtDecode(action.payload)._id,
       name: jwtDecode(action.payload).name,
       doctor: jwtDecode(action.payload).doctor
+    };
+  }
+  case LOGOUT_USER: {
+    localStorage.removeItem('token');
+    return { ...state,
+      isAuthenticated: false,
+      token: null,
+      _id: null,
+      name: null,
+      doctor: false
     };
   }
   default:

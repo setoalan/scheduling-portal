@@ -7,6 +7,7 @@ export const FETCH_PATIENT = 'FETCH_PATIENT';
 export const FETCH_PATIENTS = 'FETCH_PATIENTS';
 export const LOGIN_TOKEN = 'LOGIN_TOKEN';
 export const LOGIN_USER = 'LOGIN_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
 export const UPDATE_APPOINTMENT = 'UPDATE_APPOINTMENT';
 export const UPLOAD_FILE = 'UPLOAD_FILE';
 
@@ -65,6 +66,13 @@ export function loginUser(user, redirect = '/') {
   return {
     type: LOGIN_USER,
     payload: request
+  };
+}
+
+export function logoutUser() {
+  return {
+    type: LOGOUT_USER,
+    payload: null
   };
 }
 

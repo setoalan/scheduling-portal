@@ -34,13 +34,16 @@ const verifyAuth = (req, res, next) => {
 
 authRouter.route('/login')
   .post((req, res, next) => {
-    Users.findOne({ username:req.body.username }, '+password', (err, user) => {
-      if (!user) return res.status(401).json({ message: 'Invalid username/password' });
-      user.comparePassword(req.body.password, (err, isMatch) => {
-        if (!isMatch) return res.status(401).json({ message: 'Invalid username/password'});
-        res.json({
-          message: 'You are logged in',
-          token: createToken(user._id, user.name, user.doctor)
+    Users.findOne({ username: req.body.username }, '+password', (err, user) => {
+      // This returns an object only with the user id, not sure what the issue is
+      Users.findById(user._id, (err, user) => {
+        if (!user) return res.status(401).json({ message: 'Invalid username/password' });
+        user.comparePassword(req.body.password, (err, isMatch) => {
+          if (!isMatch) return res.status(401).json({ message: 'Invalid username/password'});
+          res.json({
+            message: 'You are logged in',
+            token: createToken(user._id, user.name, user.doctor)
+          });
         });
       });
     });

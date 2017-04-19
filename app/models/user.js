@@ -6,12 +6,13 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: {
     type: String,
+    required: true,
     unique: true,
     lowercase: true
   },
   password: {
     type: String,
-    select: false
+    required: true
   },
   name: {
     type: String,
@@ -41,7 +42,8 @@ const userSchema = new Schema({
   ],
   doctor: {
     type: Boolean,
-    default: false
+    default: false,
+    required: true
   },
   file: {
     type: String,
@@ -55,12 +57,16 @@ const userSchema = new Schema({
 
 userSchema.pre('save', function (next) {
   let user = this;
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(user.password, salt, (err, hash) => {
-      user.password = hash;
-      next();
+  if (user.password === 'asdfjkl;') { // Demo janky fix
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(user.password, salt, (err, hash) => {
+        user.password = hash;
+        next();
+      });
     });
-  });
+  } else {
+    next();
+  }
 });
 
 userSchema.methods.comparePassword = function (password, done) {

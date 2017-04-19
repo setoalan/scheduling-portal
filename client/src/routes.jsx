@@ -6,6 +6,7 @@ import Home from './components/home';
 import Users from './components/users';
 import User from './components/user';
 import Login from './components/login';
+import Logout from './components/logout';
 import Appointment from './components/appointment';
 
 export default (
@@ -16,6 +17,7 @@ export default (
       <Route path="/user/:userId" component={User} />
       <Route path="/user/:userId/appointment" component={Appointment} />
       <Route path="login" component={Login} />
+      <Route path="logout" component={Logout} />
     </Route>
   </Route>
 );

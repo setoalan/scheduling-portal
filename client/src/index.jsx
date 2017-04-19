@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { createStore, compose, applyMiddleware } from 'redux';
 import { Router, hashHistory } from 'react-router';
 import promise from 'redux-promise';
-import { createHistory } from 'history';
 
 import reducers from './reducers';
 import routes from './routes';

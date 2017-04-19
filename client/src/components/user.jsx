@@ -16,9 +16,9 @@ class User extends Component {
   }
 
   componentWillMount() {
-    if (this.props.params.userId === 'me' || this.props.params.userId === undefined) {
+    if (this.props.params.userId === 'me') {
       if (this.props.auth.isAuthenticated) {
-        this.props.fetchPatient(this.props.auth._id)
+        this.props.fetchPatient(this.props.auth._id);
       } else {
         hashHistory.push('/users/login');
       }
@@ -27,13 +27,42 @@ class User extends Component {
     }
   }
 
+  componentWillUpdate() {
+    if (this.props.location.pathname === '/user/me' && this.props.location.action === 'PUSH') {
+      this.props.fetchPatient(this.props.auth._id);
+    }
+  }
+
   updateStatus(status, appointment) {
-    appointment.status = status;
-    this.props.updateAppointment(appointment);
+    if (appointment.status !== status && appointment.status !== 'cancel') {
+      appointment.status = status;
+      this.props.updateAppointment(appointment);
+    }
   }
 
   isOldDate(date) {
     return moment(date) < moment.now();
+  }
+
+  isCanceled(status, appointment) {
+    if (status === 'active') {
+      if (appointment.status === 'active') {
+        return ' btn-success disabled';
+      } else if (appointment.status === 'pending' && this.props.auth.doctor) {
+        if (this.props.auth.doctor) {
+          return '';
+        } else {
+          return ' disabled';
+        }
+      }
+      return ' disabled';
+    } else {
+      if (appointment.status === 'cancel') {
+        return ' btn-danger disabled';
+      } else {
+        return '';
+      }
+    }
   }
 
   uploadFile() {
@@ -55,7 +84,7 @@ class User extends Component {
               <button
                 type="button"
                 onClick={() => this.updateStatus('active', appointment)}
-                className={"btn btn-default btn-xs" + (appointment.status === 'active' ? ' btn-success disabled' : '')}>
+                className={"btn btn-default btn-xs" + (this.isCanceled('active', appointment))}>
                 Active
               </button>
               <button
@@ -66,7 +95,7 @@ class User extends Component {
               <button
                 type="button"
                 onClick={() => this.updateStatus('cancel', appointment)}
-                className={"btn btn-default btn-xs" + (appointment.status === 'cancel' ? ' btn-danger disabled' : '')}>
+                className={"btn btn-default btn-xs" + (this.isCanceled('cancel', appointment))}>
                 Canceled
               </button>
             </div>
@@ -80,8 +109,24 @@ class User extends Component {
     return (
       <div className="row">
         <div className="col-xs-12">
-          <h2>{this.props.patient.name}</h2>
-          <Link to={'/user/' + this.props.patient._id + "/appointment"}><button type="button" className="btn btn-info">Make Appointment with Patient</button></Link>
+          <h2 id="name">{this.props.patient.name}</h2>
+          {
+            this.props.location.pathname !== '/user/me' &&
+            <Link to={'/user/' + this.props.patient._id + "/appointment"}>
+              <button type="button" className="btn btn-info">
+                Make Appointment with Patient
+              </button>
+            </Link>
+          }
+          {
+            this.props.location.pathname === '/user/me' &&
+            !this.props.auth.doctor &&
+            <Link to={'/user/' + this.props.patient._id + "/appointment"}>
+              <button type="button" className="btn btn-info">
+                Make Appointment
+              </button>
+            </Link>
+          }
           <h4>Age <small>{this.props.patient.age}</small></h4>
           <h4>Email Address <small>{this.props.patient.emailAddress}</small></h4>
           <h4>Mailing Address <small>{this.props.patient.mailingAddress}</small></h4>
