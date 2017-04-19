@@ -23,7 +23,6 @@ class Appointment extends Component {
     const appointment = {
       date: $('.date input').val(),
       subject: $('#subject').val(),
-      message: $('#message').val(),
       patient: $('#patient').val(),
       doctor: $('#doctor').val(),
     }
@@ -52,10 +51,6 @@ class Appointment extends Component {
             <div className="form-group">
               <label>Subject</label>
               <input type="text" className="form-control" id="subject" />
-            </div>
-            <div className="form-group">
-              <label>Message</label>
-              <textarea rows="3" className="form-control" id="message" />
             </div>
             <div className="form-group">
               <label>Doctor</label>

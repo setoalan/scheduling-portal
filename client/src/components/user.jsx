@@ -11,11 +11,14 @@ class User extends Component {
     super(props);
 
     this.updateStatusClick = this.updateStatusClick.bind(this);
+    this.cancelAppointmentDoctor= this.cancelAppointmentDoctor.bind(this);
     this.isOldDate = this.isOldDate.bind(this);
     this.uploadFile = this.uploadFile.bind(this);
   }
 
   componentWillMount() {
+    this.setState({ appointment: {} });
+
     if (this.props.params.userId === 'me') {
       if (this.props.auth.isAuthenticated) {
         this.props.fetchPatient(this.props.auth._id);
@@ -34,15 +37,22 @@ class User extends Component {
   }
 
   updateStatusClick(status, appointment) {
-    if (!this.props.auth.doctor && appointment.status === 'pending') {
-      if (status === 'cancel') {
-        appointment.status = status;
-        this.props.updateAppointment(appointment);
+    if (this.props.auth.doctor) {
+      this.setState({ appointment });
+      if (status != appointment.status) {
+        if (status === 'cancel') {
+        } else {
+          appointment.status = status;
+          this.props.updateAppointment(appointment);
+        }
       }
-      return;
-    } else if (appointment.status !== status && appointment.status !== 'cancel') {
-      appointment.status = status;
-      this.props.updateAppointment(appointment);
+    } else {
+      if (status != appointment.status) {
+        if (status === 'cancel') {
+          appointment.status = status;
+          this.props.updateAppointment(appointment);
+        }
+      }
     }
   }
 
@@ -66,6 +76,13 @@ class User extends Component {
       }
     }
   }
+
+cancelAppointmentDoctor() {
+  this.state.appointment.message = $('#message').val();
+  this.state.appointment.status = 'cancel';
+  this.props.updateAppointment(this.state.appointment);
+  $('#doctorModal').modal('hide');
+}
 
   isOldDate(date) {
     return moment(date) < moment.now();
@@ -101,7 +118,9 @@ class User extends Component {
               <button
                 type="button"
                 onClick={() => this.updateStatusClick('cancel', appointment)}
-                className={"btn btn-default btn-xs" + (this.updateStatusButton('cancel', appointment))}>
+                className={"btn btn-default btn-xs" + (this.updateStatusButton('cancel', appointment))}
+                data-toggle="modal"
+                data-target={(this.props.auth.doctor) ? '#doctorModal' : ''}>
                 Cancel
               </button>
             </div>
@@ -115,6 +134,26 @@ class User extends Component {
     return (
       <div className="row">
         <div className="col-xs-12">
+          <div className="modal fade" id="doctorModal" tabIndex="-1" role="dialog" aria-labelledby="doctorModal">
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 className="modal-title" id="myModalLabel">Explanation for Cancelation</h4>
+                </div>
+                <div className="modal-body">
+                  <div className="form-group">
+                    <label>Message</label>
+                    <textarea rows="3" className="form-control" id="message" />
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" className="btn btn-danger" onClick={() => this.cancelAppointmentDoctor()}>Update/Cancel Appointment</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <h2 id="name">{this.props.patient.name}</h2>
           {
             this.props.location.pathname !== '/user/me' &&
@@ -144,7 +183,7 @@ class User extends Component {
                 <tr>
                   <th>Date</th>
                   <th>Subject</th>
-                  <th>Message</th>
+                  <th>Doc's Message</th>
                   <th>Doctor</th>
                   <th>Patient</th>
                   <th>Status</th>
