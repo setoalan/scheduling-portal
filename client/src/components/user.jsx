@@ -10,7 +10,7 @@ class User extends Component {
   constructor(props) {
     super(props);
 
-    this.updateStatus = this.updateStatus.bind(this);
+    this.updateStatusClick = this.updateStatusClick.bind(this);
     this.isOldDate = this.isOldDate.bind(this);
     this.uploadFile = this.uploadFile.bind(this);
   }
@@ -33,18 +33,20 @@ class User extends Component {
     }
   }
 
-  updateStatus(status, appointment) {
-    if (appointment.status !== status && appointment.status !== 'cancel') {
+  updateStatusClick(status, appointment) {
+    if (!this.props.auth.doctor && appointment.status === 'pending') {
+      if (status === 'cancel') {
+        appointment.status = status;
+        this.props.updateAppointment(appointment);
+      }
+      return;
+    } else if (appointment.status !== status && appointment.status !== 'cancel') {
       appointment.status = status;
       this.props.updateAppointment(appointment);
     }
   }
 
-  isOldDate(date) {
-    return moment(date) < moment.now();
-  }
-
-  isCanceled(status, appointment) {
+  updateStatusButton(status, appointment) {
     if (status === 'active') {
       if (appointment.status === 'active') {
         return ' btn-success disabled';
@@ -65,6 +67,10 @@ class User extends Component {
     }
   }
 
+  isOldDate(date) {
+    return moment(date) < moment.now();
+  }
+
   uploadFile() {
     this.props.uploadFile();
   }
@@ -83,8 +89,8 @@ class User extends Component {
             <div className="btn-group" role="group">
               <button
                 type="button"
-                onClick={() => this.updateStatus('active', appointment)}
-                className={"btn btn-default btn-xs" + (this.isCanceled('active', appointment))}>
+                onClick={() => this.updateStatusClick('active', appointment)}
+                className={"btn btn-default btn-xs" + (this.updateStatusButton('active', appointment))}>
                 Active
               </button>
               <button
@@ -94,9 +100,9 @@ class User extends Component {
               </button>
               <button
                 type="button"
-                onClick={() => this.updateStatus('cancel', appointment)}
-                className={"btn btn-default btn-xs" + (this.isCanceled('cancel', appointment))}>
-                Canceled
+                onClick={() => this.updateStatusClick('cancel', appointment)}
+                className={"btn btn-default btn-xs" + (this.updateStatusButton('cancel', appointment))}>
+                Cancel
               </button>
             </div>
           </td>

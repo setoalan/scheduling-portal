@@ -15,7 +15,7 @@ class Header extends Component {
           <nav className="navbar navbar-default">
             <div className="container-fluid">
               <div className="navbar-header">
-                <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
                   <span className="sr-only">Toggle navigation</span>
                   <span className="icon-bar"></span>
                   <span className="icon-bar"></span>
@@ -24,13 +24,20 @@ class Header extends Component {
                 <Link className="navbar-brand" to={'/'}>TEMPUS</Link>
               </div>
 
-              <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                {
-                  this.props.auth.doctor &&
-                  <ul className="nav navbar-nav">
+              <div className="collapse navbar-collapse" id="navbar-collapse">
+                <ul className="nav navbar-nav">
+                  {
+                    this.props.auth.doctor &&
                     <li className={this.isActivePath('/users')}><Link to={'/users'}>Patients</Link></li>
-                  </ul>
-                }
+                  }
+                  {
+                    this.props.auth.doctor &&
+                    <p className="navbar-text">
+                      <span className="glyphicon glyphicon-user" aria-hidden="true"></span>
+                      <small> Signed in as doctor</small>
+                    </p>
+                  }
+                </ul>
                 <ul className="nav navbar-nav navbar-right">
                   <li className={this.isActivePath('/user/me')}><Link to={'/user/me'}>My Record</Link></li>
                   {

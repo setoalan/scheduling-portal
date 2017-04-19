@@ -6,24 +6,23 @@ import { fetchPatients } from '../actions/index';
 
 class Users extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = { term: '' };
+  }
+
   componentWillMount() {
-    this.checkAuth(this.props.auth.isAuthenticated);
     this.props.fetchPatients();
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.checkAuth(nextProps.auth.isAuthenticated);
-  }
-
-  checkAuth(isAuthenticated) {
-    if (!isAuthenticated) {
-      let redirectAfterLogin = this.props.location.pathname;
-      hashHistory.push(`/users/login?next=${redirectAfterLogin}`);
-    }
-  }
-
   renderPatients() {
-    return this.props.patients.map((patient) => {
+    return this.props.patients
+    .filter((patient) => {
+      if (this.state.term === '') return true;
+      return (patient.name.toLowerCase().includes(this.state.term.toLowerCase()));
+    })
+    .map((patient) => {
       return (
         <tr key={patient._id}>
           <td>{patient.name}</td>
@@ -37,11 +36,22 @@ class Users extends Component {
     });
   }
 
+  onInputChange(term) {
+    this.setState({ term });
+  }
+
   render() {
     return (
       <div className="row">
         <div className="col-xs-12">
           <h2>Patients</h2>
+          <div className="form-group">
+            <input
+              type="text"
+              onChange={event => this.onInputChange(event.target.value)}
+              className="form-control"placeholder="Search"
+              value={this.state.term} />
+          </div>
           <div className="table-responsive">
             <table className="table table-striped table-hover">
               <thead>

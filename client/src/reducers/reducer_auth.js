@@ -1,4 +1,5 @@
 import jwtDecode from 'jwt-decode';
+import { hashHistory } from 'react-router';
 
 import { LOGIN_USER, LOGIN_TOKEN, LOGOUT_USER } from '../actions/index';
 
@@ -14,6 +15,9 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case LOGIN_USER: {
     localStorage.setItem('token', action.payload.data.token);
+
+    (jwtDecode(action.payload.data.token).doctor) ? hashHistory.push('/users') : hashHistory.push('/');
+
     return { ...state,
       isAuthenticated: true,
       token: action.payload.data.token,

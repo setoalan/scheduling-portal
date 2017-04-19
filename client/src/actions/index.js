@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { hashHistory } from 'react-router';
 
 export const CREATE_APPOINTMENT = 'CREATE_APPOINTMENT';
 export const FETCH_DOCTORS = 'FETCH_DOCTORS';
@@ -60,8 +59,6 @@ export function loginToken(token) {
 
 export function loginUser(user, redirect = '/') {
   const request = axios.post(`${ROOT_URL}/auth/login`, user);
-
-  hashHistory.push(redirect);
 
   return {
     type: LOGIN_USER,
