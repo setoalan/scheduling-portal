@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
@@ -16,7 +16,16 @@ class User extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchPatient(this.props.params.userId);
+    console.log(this.props);
+    if (this.props.params.userId === 'me' || this.props.params.userId === undefined) {
+      if (this.props.auth.isAuthenticated) {
+        this.props.fetchPatient(this.props.auth._id)
+      } else {
+        hashHistory.push('/users/login');
+      }
+    } else {
+      this.props.fetchPatient(this.props.params.userId);
+    }
   }
 
   updateStatus(status, appointment) {
@@ -117,7 +126,8 @@ class User extends Component {
 const mapStateToProps = (state) => {
   return {
     appointment: state.appointment.appointment,
-    patient: state.patient.patient
+    patient: state.patient.patient,
+    auth: state.auth
   }
 }
 

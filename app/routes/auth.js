@@ -7,10 +7,11 @@ import Users from '../models/user';
 
 const authRouter = express.Router();
 
-const createToken = (name, doctor) => {
+const createToken = (id, name, doctor) => {
   const payload = {
     name,
     doctor,
+    _id: id,
     expires: moment().add(1, 'day').unix()
   };
   return jwt.sign(payload, config.secretKey);
@@ -39,7 +40,7 @@ authRouter.route('/login')
         if (!isMatch) return res.status(401).json({ message: 'Invalid username/password'});
         res.json({
           message: 'You are logged in',
-          token: createToken(user.name, user.doctor)
+          token: createToken(user._id, user.name, user.doctor)
         });
       });
     });
@@ -54,7 +55,7 @@ authRouter.route('/signup')
         if (err) res.send(err);
         res.json({
           message: 'Welcome to Tempus, you are now logged in',
-          token: createToken(result.name, result.doctor)
+          token: createToken(result._id, result.name, result.doctor)
         });
       });
     });

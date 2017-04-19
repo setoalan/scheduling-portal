@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
 
 import { fetchPatients } from '../actions/index';
@@ -7,7 +7,19 @@ import { fetchPatients } from '../actions/index';
 class Users extends Component {
 
   componentWillMount() {
+    this.checkAuth(this.props.auth.isAuthenticated);
     this.props.fetchPatients();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.checkAuth(nextProps.auth.isAuthenticated);
+  }
+
+  checkAuth(isAuthenticated) {
+    if (!isAuthenticated) {
+      let redirectAfterLogin = this.props.location.pathname;
+      hashHistory.push(`/users/login?next=${redirectAfterLogin}`);
+    }
   }
 
   renderPatients() {
@@ -55,7 +67,8 @@ class Users extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    patients: state.patients.patients
+    patients: state.patients.patients,
+    auth: state.auth
   }
 }
 

@@ -1,14 +1,33 @@
 import axios from 'axios';
+import { hashHistory } from 'react-router';
 
-export const FETCH_PATIENTS = 'FETCH_PATIENTS';
-export const FETCH_DOCTORS = 'FETCH_DOCTORS';
 export const CREATE_APPOINTMENT = 'CREATE_APPOINTMENT';
+export const FETCH_DOCTORS = 'FETCH_DOCTORS';
+export const FETCH_PATIENT = 'FETCH_PATIENT';
+export const FETCH_PATIENTS = 'FETCH_PATIENTS';
+export const LOGIN_USER = 'LOGIN_USER';
 export const UPDATE_APPOINTMENT = 'UPDATE_APPOINTMENT';
 export const UPLOAD_FILE = 'UPLOAD_FILE';
-export const FETCH_PATIENT = 'FETCH_PATIENT';
-export const LOGIN_USER = 'LOGIN_USER';
 
 const ROOT_URL = 'http://localhost:3001';
+
+export function createAppointment(appointment) {
+  const request = axios.post(`${ROOT_URL}/appointments`, appointment);
+
+  return {
+    type: CREATE_APPOINTMENT,
+    payload: request
+  };
+}
+
+export function fetchPatient(userId) {
+  const request = axios.get(`${ROOT_URL}/users/${userId}`);
+
+  return {
+    type: FETCH_PATIENT,
+    payload: request
+  };
+}
 
 export function fetchPatients() {
   const request = axios.get(`${ROOT_URL}/users/patients`);
@@ -28,11 +47,13 @@ export function fetchDoctors() {
   };
 }
 
-export function createAppointment(appointment) {
-  const request = axios.post(`${ROOT_URL}/appointments`, appointment);
+export function loginUser(user, redirect = '/') {
+  const request = axios.post(`${ROOT_URL}/auth/login`, user);
+
+  hashHistory.push(redirect);
 
   return {
-    type: CREATE_APPOINTMENT,
+    type: LOGIN_USER,
     payload: request
   };
 }
@@ -47,28 +68,10 @@ export function updateAppointment(appointment) {
 }
 
 export function uploadFile() {
-  console.log('Uploading file... (not implemented)');
+  console.log('Uploading file... (not yet implemented)');
 
   return {
     type: UPLOAD_FILE,
     payload: null
-  };
-}
-
-export function fetchPatient(userId) {
-  const request = axios.get(`${ROOT_URL}/users/${userId}`);
-
-  return {
-    type: FETCH_PATIENT,
-    payload: request
-  };
-}
-
-export function loginUser(user) {
-  const request = axios.post(`${ROOT_URL}/auth/login`, user);
-
-  return {
-    type: LOGIN_USER,
-    payload: request
   };
 }

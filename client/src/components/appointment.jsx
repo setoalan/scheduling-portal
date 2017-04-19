@@ -76,7 +76,8 @@ class Appointment extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    doctors: state.doctors.doctors
+    doctors: state.doctors.doctors,
+    auth: state.auth
   }
 }
 
