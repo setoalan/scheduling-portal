@@ -17,6 +17,7 @@ createStoreWithMiddleware = compose(middleware);
 
 const store = createStoreWithMiddleware(createStore)(reducers, window.__INITIAL_STATE__);
 
+// get token if user has signed in before
 let token = localStorage.getItem('token');
 if (token !== null) {
   store.dispatch(loginToken(token));

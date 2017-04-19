@@ -7,6 +7,7 @@ import Users from '../models/user';
 
 const authRouter = express.Router();
 
+// generate jwt token with addtional attributes
 const createToken = (id, name, doctor) => {
   const payload = {
     name,
@@ -20,7 +21,7 @@ const createToken = (id, name, doctor) => {
 const verifyAuth = (req, res, next) => {
   const token = req.headers['x-access-token'];
   if (token) {
-    jwt.verify(token, config.secretKey, (err, payload) => {
+    jwt.verify(token, config.secretKey, (err, payload) => { // verify token
       if (err) {
         return res.status(403).send({ message: 'Failed to authenticate token' });
       } else {
@@ -34,8 +35,9 @@ const verifyAuth = (req, res, next) => {
 
 authRouter.route('/login')
   .post((req, res, next) => {
+    // This returns an object with the user id only, not sure what the issue is...
     Users.findOne({ username: req.body.username }, '+password', (err, user) => {
-      // This returns an object only with the user id, not sure what the issue is
+      // ... so searched db again with id and got all user data object
       Users.findById(user._id, (err, user) => {
         if (!user) return res.status(401).json({ message: 'Invalid username/password' });
         user.comparePassword(req.body.password, (err, isMatch) => {

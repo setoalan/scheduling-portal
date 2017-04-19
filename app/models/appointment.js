@@ -4,8 +4,7 @@ const Schema = mongoose.Schema;
 const appointmentSchema = new Schema({
   date: {
     type: Date,
-    required: true,
-    default: Date.now // TODO: remove later
+    required: true
   },
   subject: {
     type: String,

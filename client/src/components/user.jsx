@@ -41,7 +41,6 @@ class User extends Component {
       this.setState({ appointment });
       if (status != appointment.status) {
         if (status === 'cancel') {
-        } else {
           appointment.status = status;
           this.props.updateAppointment(appointment);
         }

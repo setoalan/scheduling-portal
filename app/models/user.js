@@ -55,6 +55,7 @@ const userSchema = new Schema({
   }
 );
 
+// generate hash from user password
 userSchema.pre('save', function (next) {
   let user = this;
   if (user.password === 'asdfjkl;') { // Demo janky fix
@@ -69,6 +70,7 @@ userSchema.pre('save', function (next) {
   }
 });
 
+// determine if password for log in matches
 userSchema.methods.comparePassword = function (password, done) {
   bcrypt.compare(password, this.password, (err, isMatch) => {
     done(err, isMatch);

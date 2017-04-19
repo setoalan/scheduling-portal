@@ -18,7 +18,7 @@ class Users extends Component {
 
   renderPatients() {
     return this.props.patients
-    .filter((patient) => {
+    .filter((patient) => { // search feature
       if (this.state.term === '') return true;
       return (patient.name.toLowerCase().includes(this.state.term.toLowerCase()));
     })

@@ -17,12 +17,12 @@ appointmentRouter.route('/')
       if (err) throw err;
       Users.findById(req.body.patient, (err, patient) => {
         if (err) throw err;
-        patient.appointments.push(appointment._id);
+        patient.appointments.push(appointment._id); // add appointment reference to patient
         patient.save((err, patient) => {
           if (err) throw err;
           Users.findById(req.body.doctor, (err, doctor) => {
             if (err) throw err;
-            doctor.appointments.push(appointment._id);
+            doctor.appointments.push(appointment._id); // add appointment reference to doctor
             doctor.save((err, doctor) => {
               if (err) throw err;
               res.json(appointment);
@@ -42,7 +42,7 @@ appointmentRouter.route('/:appointmentId')
   })
   .put((req, res, next) => {
     Appointments.findByIdAndUpdate(req.params.appointmentId, {
-      $set: req.body
+      $set: req.body // update appointment with new info
     }, {
       new: true
     }, (err, appointment) => {
@@ -56,13 +56,13 @@ appointmentRouter.route('/:appointmentId')
       Users.findById(appointment.patient, (err, patient) => {
         if (err) throw err;
         const index = patient.appointments.indexOf(appointment._id);
-        patient.appointments.splice(index, 1);
+        patient.appointments.splice(index, 1); // remove appointment reference from patient
         patient.save((err, result) => {
           if (err) throw err;
           Users.findById(appointment.doctor, (err, doctor) => {
             if (err) throw err;
             const index = doctor.appointments.indexOf(appointment._id);
-            doctor.appointments.splice(index, 1);
+            doctor.appointments.splice(index, 1); // remove appointment reference from patient
             doctor.save((err, result) => {
               res.json(appointment);
             });
