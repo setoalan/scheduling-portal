@@ -1,19 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import { Router, hashHistory } from 'react-router';
 import promise from 'redux-promise';
+import { createHistory } from 'history';
 
 import reducers from './reducers';
 import routes from './routes';
+import { loginToken } from './actions';
 
-const createStoreWithMiddleware = applyMiddleware(
-  promise
-)(createStore);
+let createStoreWithMiddleware;
+
+const middleware = applyMiddleware(promise);
+
+createStoreWithMiddleware = compose(middleware);
+
+const store = createStoreWithMiddleware(createStore)(reducers, window.__INITIAL_STATE__);
+
+let token = localStorage.getItem('token');
+if (token !== null) {
+  store.dispatch(loginToken(token));
+}
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
+  <Provider store={store}>
     <Router history={hashHistory} routes={routes} />
   </Provider>,
   document.getElementById('content')

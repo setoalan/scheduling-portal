@@ -5,6 +5,7 @@ export const CREATE_APPOINTMENT = 'CREATE_APPOINTMENT';
 export const FETCH_DOCTORS = 'FETCH_DOCTORS';
 export const FETCH_PATIENT = 'FETCH_PATIENT';
 export const FETCH_PATIENTS = 'FETCH_PATIENTS';
+export const LOGIN_TOKEN = 'LOGIN_TOKEN';
 export const LOGIN_USER = 'LOGIN_USER';
 export const UPDATE_APPOINTMENT = 'UPDATE_APPOINTMENT';
 export const UPLOAD_FILE = 'UPLOAD_FILE';
@@ -44,6 +45,15 @@ export function fetchDoctors() {
   return {
     type: FETCH_DOCTORS,
     payload: request
+  };
+}
+
+export function loginToken(token) {
+  localStorage.setItem('token', token);
+
+  return {
+    type: LOGIN_TOKEN,
+    payload: token
   };
 }
 

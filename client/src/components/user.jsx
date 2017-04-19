@@ -16,7 +16,6 @@ class User extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props);
     if (this.props.params.userId === 'me' || this.props.params.userId === undefined) {
       if (this.props.auth.isAuthenticated) {
         this.props.fetchPatient(this.props.auth._id)
