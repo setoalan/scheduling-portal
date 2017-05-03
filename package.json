@@ -1,7 +1,7 @@
 {
-  "name": "tempus-code-challenge",
-  "version": "0.2.0",
-  "description": "Tempus Code Challenge",
+  "name": "scheduling-portal",
+  "version": "0.2.1",
+  "description": "Scheduling Portal",
   "private": true,
   "main": "index.js",
   "license": "ISC",
@@ -12,10 +12,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/setoalan/tempus-code-challenge.git"
+    "url": "git+ssh://git@github.com/setoalan/scheduling-portal.git"
   },
   "author": "Alan Seto <alantseto@gmail.com>",
-  "homepage": "https://bitbucket.org/setoalan/tempus-code-challenge#readme",
+  "homepage": "https://github.com/setoalan/scheduling-portal#readme",
   "dependencies": {
     "axios": "^0.16.1",
     "bcryptjs": "^2.4.3",
