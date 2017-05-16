@@ -130,6 +130,18 @@ cancelAppointmentDoctor() {
   }
 
   render() {
+    const userRecordPath = (this.props.location.pathname !== '/user/me') ?
+      <Link to={'/user/' + this.props.patient._id + "/appointment"}>
+        <button type="button" className="btn btn-info">
+          Make Appointment with Patient
+        </button>
+      </Link> :
+      <Link to={'/user/' + this.props.patient._id + "/appointment"}>
+        <button type="button" className="btn btn-info">
+          Make Appointment
+        </button>
+      </Link>;
+
     return (
       <div className="row">
         <div className="col-xs-12">
@@ -154,23 +166,7 @@ cancelAppointmentDoctor() {
             </div>
           </div>
           <h2 id="name">{this.props.patient.name}</h2>
-          {
-            this.props.location.pathname !== '/user/me' &&
-            <Link to={'/user/' + this.props.patient._id + "/appointment"}>
-              <button type="button" className="btn btn-info">
-                Make Appointment with Patient
-              </button>
-            </Link>
-          }
-          {
-            this.props.location.pathname === '/user/me' &&
-            !this.props.auth.doctor &&
-            <Link to={'/user/' + this.props.patient._id + "/appointment"}>
-              <button type="button" className="btn btn-info">
-                Make Appointment
-              </button>
-            </Link>
-          }
+          { userRecordPath }
           <h4>Age <small>{this.props.patient.age}</small></h4>
           <h4>Email Address <small>{this.props.patient.emailAddress}</small></h4>
           <h4>Mailing Address <small>{this.props.patient.mailingAddress}</small></h4>

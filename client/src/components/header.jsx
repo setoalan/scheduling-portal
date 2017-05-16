@@ -9,6 +9,25 @@ class Header extends Component {
   }
 
   render() {
+    const doctorNavA = (this.props.auth.doctor) ?
+      <li className={this.isActivePath('/users')}><Link to={'/users'}>Patients</Link></li> :
+      '';
+
+    const doctorNavB = (this.props.auth.doctor) ?
+      <p className="navbar-text">
+        <span className="glyphicon glyphicon-user" aria-hidden="true"></span>
+        <small> Signed in as doctor</small>
+      </p> :
+      '';
+
+    const authenticatedNavA = (this.props.auth.isAuthenticated) ?
+      <li className={this.isActivePath('/user/me')}><Link to={'/user/me'}>My Record</Link></li> :
+      '';
+
+    const authenticatedNavB = (this.props.auth.isAuthenticated) ?
+      <li className={this.isActivePath('/users/logout')}><Link to={'/users/logout'}>Log Out</Link></li> :
+      <li className={this.isActivePath('/users/login')}><Link to={'/users/login'}>Log In</Link></li>;
+
     return (
       <div className="row">
         <div className="col-xs-12">
@@ -21,33 +40,16 @@ class Header extends Component {
                   <span className="icon-bar"></span>
                   <span className="icon-bar"></span>
                 </button>
-                <Link className="navbar-brand" to={'/'}>TEMPUS</Link>
+                <Link className="navbar-brand" to={'/'}>Scheduling Portal</Link>
               </div>
-
               <div className="collapse navbar-collapse" id="navbar-collapse">
                 <ul className="nav navbar-nav">
-                  {
-                    this.props.auth.doctor &&
-                    <li className={this.isActivePath('/users')}><Link to={'/users'}>Patients</Link></li>
-                  }
-                  {
-                    this.props.auth.doctor &&
-                    <p className="navbar-text">
-                      <span className="glyphicon glyphicon-user" aria-hidden="true"></span>
-                      <small> Signed in as doctor</small>
-                    </p>
-                  }
+                  { doctorNavA }
+                  { doctorNavB }
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
-                  <li className={this.isActivePath('/user/me')}><Link to={'/user/me'}>My Record</Link></li>
-                  {
-                    this.props.auth.isAuthenticated &&
-                    <li className={this.isActivePath('/users/logout')}><Link to={'/users/logout'}>Log Out</Link></li>
-                  }
-                  {
-                    !this.props.auth.isAuthenticated &&
-                    <li className={this.isActivePath('/users/login')}><Link to={'/users/login'}>Log In</Link></li>
-                  }
+                  { authenticatedNavA }
+                  { authenticatedNavB }
                 </ul>
               </div>
             </div>
