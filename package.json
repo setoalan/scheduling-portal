@@ -1,6 +1,6 @@
 {
   "name": "scheduling-portal",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Scheduling Portal",
   "private": true,
   "main": "index.js",
@@ -17,7 +17,7 @@
     "url": "https://github.com/setoalan/scheduling-portal/issues"
   },
   "author": "Alan Seto <alantseto@gmail.com>",
-  "homepage": "https://github.com/setoalan/scheduling-portal#readme",
+  "homepage": "https://scheduling-portal.herokuapp.com",
   "dependencies": {
     "axios": "^0.16.1",
     "babel-cli": "^6.24.1",

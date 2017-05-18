@@ -10,7 +10,7 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const UPDATE_APPOINTMENT = 'UPDATE_APPOINTMENT';
 export const UPLOAD_FILE = 'UPLOAD_FILE';
 
-const ROOT_URL = 'http://localhost:3001';
+const ROOT_URL = 'https://scheduling-portal.herokuapp.com';
 
 export function createAppointment(appointment) {
   const request = axios.post(`${ROOT_URL}/appointments`, appointment);
